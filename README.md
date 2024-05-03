@@ -1,6 +1,6 @@
-# backpack.tf-ws-service
+# bptf-ws-service
 
-backpack.tf-ws-service is a script designed to connect to backpack.tf's websocket service and gather listing data. 
+bptf-ws-service is a script designed to connect to backpack.tf's websocket service and gather listing data. 
 
 It also calls the backpack.tf snapshot endpoint frequently to ensure the data is kept up to date.
 
@@ -16,7 +16,7 @@ This listings are stored in a MongoDB database.
 + Clone the repository to your local machine:
     
     ```bash
-    git clone git@github.com:purplebarber/backpack.tf-ws-service.git
+    git clone git@github.com:nekomatic-tf/bptf-ws-service.git
     ```
 + Install the required dependencies:
 
