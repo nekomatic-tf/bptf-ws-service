@@ -133,13 +133,23 @@ class BptfWebSocket:
             )[:10]
             oldest_prioritized_items = [item[0] for item in oldest_prioritized_items][:10]
 
-            #for item in oldest_items:
-            #    await self.update_snapshot(item)
-            #    await self.print_event(f"Refreshed snapshot for {item}")
-            #    await sleep(1)
+            for item in oldest_items:
+                try:
+                    await self.update_snapshot(item)
+                except Exception:
+                    await self.print_event(f"Failed to refresh snapshot for {item}")
+                    await sleep(1)
+                    continue # Skip this item and continue
+                await self.print_event(f"Refreshed snapshot for {item}")
+                await sleep(1)
 
             for item in oldest_prioritized_items:
-                await self.update_snapshot(item)
+                try:
+                    await self.update_snapshot(item)
+                except Exception:
+                    await self.print_event(f"Failed to refresh snapshot for {item}")
+                    await sleep(1)
+                    continue # Skip this item and continue
                 await self.print_event(f"Refreshed snapshot for {item}")
                 await sleep(1)
 
