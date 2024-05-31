@@ -122,6 +122,18 @@ class BptfWebSocket:
     async def refresh_snapshots(self) -> None:
         await self.print_event("Refreshing snapshots...")
 
+        # Snapshot everything, once
+        for item in self.prioritized_items:
+            try:
+                await self.update_snapshot(item)
+            except Exception:
+                await self.print_event(f"Failed to refresh snapshot for {item}")
+                await sleep(1)
+                continue # Skip this item and continue
+            await self.print_event(f"Refreshed snapshot for {item}")
+            await sleep(1)
+        print("Snapshotted all prioritized items one time")
+
         while True:
             self.snapshot_times = await self.mongodb.get_all_snapshot_times()
             oldest_items = sorted(self.snapshot_times.items(), key=lambda x: x[1])[:10]
